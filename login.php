@@ -3,9 +3,6 @@ session_start();
 include 'connexion.php';
 require 'vendor/autoload.php';
 
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -15,17 +12,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if($user && password_verify($password, $user['password'])){
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['username'] = $user['nomcomplet'];
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['nomcomplet'];
 
-    header("Location: tableborde.php");
-    exit;
+        // Vérifier si l'utilisateur a déjà une carte
+        $stmt = $pdo->prepare("SELECT COUNT(*) AS nb_cartes FROM carte WHERE user_id = ?");
+        $stmt->execute([$user['id']]);
+        $nb_cartes = $stmt->fetch(PDO::FETCH_ASSOC)['nb_cartes'];
+
+        if ($nb_cartes == 0) {
+            header("Location: ajouter_carte.php");
+            exit;
+        } else {
+            header("Location: tableborde.php");
+            exit;
+        }
     } else {
         $_SESSION['error'] = "Email ou mot de passe incorrect";
-        header("Location: cartes.php");
+        header("Location: login.php");
         exit;
+    }
 }
-}
+?>
+
         
         // $otp = str_pad(rand(0,999999),6,'0',STR_PAD_LEFT);
         // $_SESSION['otp'] = $otp;

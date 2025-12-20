@@ -2,18 +2,9 @@
 session_start();
 include 'connexion.php';
 
-    // $stmt =$pdo->prepare("SELECT category FROM expenses WHERE user_id=? ");
-    // $category=$stmt->execute([$_SESSION['user_id']]);
-
-    
-    $stmt=$pdo->prepare("SELECT SUM(MontantIn) AS totalIN FROM incomes where user_id=?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $totalIn=$stmt->fetch(PDO::FETCH_ASSOC)['totalIN'];
-    $stmt=$pdo->prepare("SELECT SUM(MontantEx) AS totalEX FROM expenses where user_id=?");
-    $stmt->execute([$_SESSION['user_id']]);
-    $totalEx=$stmt->fetch(PDO::FETCH_ASSOC)['totalEX'];
-    $solde = $totalIn - $totalEx;
-
+if (!isset($_SESSION['user_id'])) {
+   exit('Accès interdit');
+}
 
 ?>
 
@@ -28,10 +19,23 @@ include 'connexion.php';
 <body class="flex flex-wrap gap-10 bg-purple-100">
     <p class="text-xl centre font-semibold tracking-widest w-[350px] h-[200px] rounded-2xl bg-purple-100 p-6 shadow-2xl"><a href="tableborde.php">Retour a table de borde </a></p>
     <?php
-     $stmt = $pdo->prepare("SELECT * from carte where user_id= ?");
-        $stmt->execute([$_SESSION['user_id']]);
+    $stmt = $pdo->prepare("SELECT  carte.id, carte.nom, category.nom AS category_name FROM carte JOIN category ON carte.category_id = category.id WHERE carte.user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
     
         while($carte = $stmt->fetch()){
+
+            // total incomes par carte
+            $stmtIn = $pdo->prepare("SELECT SUM(MontantIn) FROM incomes WHERE carte_id = ?");
+            $stmtIn->execute([$carte['id']]);
+            $totalIn = $stmtIn->fetchColumn() ?? 0;
+
+            // total expenses par carte
+            $stmtEx = $pdo->prepare("SELECT SUM(MontantEx) FROM expenses WHERE carte_id = ?");
+            $stmtEx->execute([$carte['id']]);
+            $totalEx = $stmtEx->fetchColumn() ?? 0;
+
+            $solde = $totalIn - $totalEx;
+
             echo '
             
             <div class=" w-[350px] h-[200px] rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 text-white p-6 shadow-2xl">
@@ -42,7 +46,7 @@ include 'connexion.php';
                 </div>
 
                 <div class="flex justify-between items-center">
-                    <span class="text-lg font-bold">category : '.$carte['category'].'</span>
+                    <span class="text-lg font-bold">category : '.$carte['category_name'].'</span>
                     
                 </div>
 

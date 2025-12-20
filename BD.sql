@@ -1,7 +1,7 @@
 --creation de la base de données 
-CREATE DATABASE financier; 
+CREATE DATABASE smart_wallet; 
 
-USE CREATE DATABASE financier; 
+USE  smart_wallet; 
 
 --creation de tableau user 
 CREATE TABLE utilisateur (
@@ -11,22 +11,24 @@ CREATE TABLE utilisateur (
     password varchar(255) NOT NULL
 );
  
---creation table carte 
-CREATE TABLE carte (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    nom VARCHAR(255) NOT NULL,
-    solde FLOAT DEFAULT 0,
-    category varchar(255) not nul ,
-    FOREIGN KEY (user_id) REFERENCES utilisateur(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 --creation table category 
 CREATE TABLE category (
     id INT AUTO_INCREMENT PRIMARY KEY,
     limite_mensuelle DECIMAL(10,2) NOT NULL DEFAULT 0,
     nom VARCHAR(100) NOT NULL
 );
+
+--creation table carte 
+CREATE TABLE carte (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    nom VARCHAR(255) NOT NULL,
+    solde FLOAT DEFAULT 0,
+    category_id INT NOT NULL  ,
+    FOREIGN KEY (user_id) REFERENCES utilisateur(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 --creation de tableau Incomes 
 CREATE TABLE Incomes (
@@ -61,7 +63,7 @@ CREATE TABLE Expenses  (
 
 
 --creation table transaction  
-CREATE TABLE transaction  (
+CREATE TABLE transactions  (
     id int PRIMARY KEY AUTO_INCREMENT,
     id_send int ,
     id_service int,
@@ -76,7 +78,8 @@ CREATE TABLE otp_codes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     code VARCHAR(6) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES utilisateur(id)
 );
 
-DESCRIBE DATABASE;
+

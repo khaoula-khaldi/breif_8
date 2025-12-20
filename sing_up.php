@@ -1,4 +1,5 @@
  <?php  
+ session_start();
  include 'connexion.php';
   if(isset($_POST['inscrire'])) {
     $nomcomplet=$_POST['nomcomplet'];

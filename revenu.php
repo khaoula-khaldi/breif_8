@@ -54,23 +54,6 @@ if(!isset($_SESSION['user_id'])){
                   <input type="text" name="descreptionIn" placeholder="Description" class="border border-gray-300 p-2 rounded flex-1" required>
                   <input type="date" name="date_enterIn" class="border border-gray-300 p-2 rounded w-1/4" required>
               </div>
-
-              <div class="flex gap-3">
-                  <input type="text" name="category" placeholder="categorie" class="border border-gray-300 p-2 rounded w-1/4" required>
-
-                <select name="id_carte" class="border border-gray-300 p-2 rounded w-1/4" required>
-                    <option value=""> carte aleatoir </option>
-                    <?php
-                    $stmt = $pdo->prepare("SELECT * FROM carte WHERE user_id = ?");
-                    $stmt->execute([$_SESSION['user_id']]);
-                    $cartes = $stmt->fetchAll();
-                    foreach($cartes as $c){
-                        echo "<option value='".$c['id']."'>".$c['nom']."</option>";
-                    }
-                    ?>
-                </select>
-              </div>
-
               <button name="ajouter_revenu" class="bg-pink-300 hover:bg-pink-400 text-white px-4 py-2 rounded shadow mt-2">Ajouter</button>
           </form>
       </section>
@@ -101,24 +84,7 @@ if($_SERVER['REQUEST_METHOD'] =='POST' && isset($_POST['ajouter_revenu'])){
         $stmt->execute([$category]);
         $id_category = $pdo->lastInsertId();
     }
-     // limite de category 
-    $stmt=$pdo->prepare("SELECT limite_mensuelle FROM category WHERE id=? ");
-    $stmt->execute([$id_category]);
-    $category_limite = $stmt->fetch();
-    $limite = $category_limite['limite_mensuelle'] ?? 0;
-
-    //calcule somme depenses
-    $stmt = $pdo->prepare("SELECT SUM(montantIn) AS total FROM incomes WHERE  category_id = ?AND MONTH(date_enterIn) = MONTH(CURRENT_DATE()) AND YEAR(date_enterIn) = YEAR(CURRENT_DATE()) ");
-    $stmt->execute([$id_category]);
-    $total_mois = $stmt->fetch()['total'] ?? 0;
-
-    //ajoute limite 
-    if($limite>0 && ($total_mois+$montantIn)>$limite){
-    $_SESSION['erreur'] = "❌ Vous avez dépassé la limite mensuelle de cette catégorie";
-    header('Location: despenses.php');
-    exit;
-    }
-
+    
     //  Inserer dans expense
     $stmt = $pdo->prepare("INSERT INTO incomes(MontantIn, descreptionIn, date_enterIn, user_id, carte_id, category_id) VALUES (?,?,?,?,?,?)");
     $stmt->execute([$MontantIn, $descreptionIn, $date_enterIn, $user_id, $carte_id, $id_category]);

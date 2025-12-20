@@ -15,10 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajoute_carte'])) {
 
     $nom = trim($_POST['nom']);
     $category_name = trim($_POST['category']);
-    $category_limite = trim($_POST['limite_mensuelle']);
+    $category_limite = trim($_POST['limite']);
     $user_id = $_SESSION['user_id'];
 
-    // 1️⃣ Vérifier si la catégorie existe déjà
+    //  Vérifier si la catégorie existe déjà
     $stmt = $pdo->prepare("SELECT id FROM category WHERE nom = ? ");
     $stmt->execute([$category_name]);
     $existing = $stmt->fetch();
@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajoute_carte'])) {
         $category_id = $pdo->lastInsertId();
     }
 
-    // 2️⃣ Insérer la carte avec le category_id
-    $stmt = $pdo->prepare("INSERT INTO carte(user_id, nom, category) VALUES (?, ?, ?)");
-    $stmt->execute([$user_id, $nom, $category_name]); // Si tu veux mettre category_id à la place, change la colonne
+    //  Insérer la carte avec le category_id
+    $stmt = $pdo->prepare("INSERT INTO carte(user_id, nom, category_id) VALUES (?, ?, ?)");
+    $stmt->execute([$user_id, $nom, $category_id]); // Si tu veux mettre category_id à la place, change la colonne
 
-    // 3️⃣ Rediriger après l'ajout
+    //  Rediriger après l'ajout
     header('Location: cards.php');
     exit;
 }

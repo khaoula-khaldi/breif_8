@@ -4,6 +4,7 @@ session_start();
 if(!isset($_SESSION['user_id'])){
   header('location: compte_deja.php');
   exit;
+
 }
 ?>
 <!DOCTYPE html>
@@ -102,12 +103,12 @@ if($_SERVER['REQUEST_METHOD'] =='POST' && isset($_POST['ajouter_depenses'])){
     $limite = $category_limite['limite_mensuelle'] ?? 0;
 
     //calcule somme depenses
-    $stmt = $pdo->prepare("SELECT SUM(montantEx) AS total FROM expenses WHERE  category_id = ?AND MONTH(date_enterEx) = MONTH(CURRENT_DATE()) AND YEAR(date_enterEx) = YEAR(CURRENT_DATE()) ");
+    $stmt = $pdo->prepare("SELECT SUM(MontantEx) AS total FROM Expenses WHERE  category_id = ? AND MONTH(date_enterEx) = MONTH(CURRENT_DATE()) AND YEAR(date_enterEx) = YEAR(CURRENT_DATE()) ");
     $stmt->execute([$id_category]);
     $total_mois = $stmt->fetch()['total'] ?? 0;
 
     //ajoute limite 
-    if($limite>0 && ($total_mois+$montantEx)>$limite){
+    if($limite > 0 && ($total_mois + $MontantEx) > $limite){
     $_SESSION['erreur'] = "❌ Vous avez dépassé la limite mensuelle de cette catégorie";
     header('Location: despenses.php');
     exit;
