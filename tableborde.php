@@ -40,7 +40,8 @@ include 'connexion.php';
            z-50">
                     <li class="hover:bg-gray-100 p-2"><a href="profil.php">Profil</a></li>
                     <li class="hover:bg-gray-100 p-2"><a href="ajouter_carte.php">ajouter un carte</a></li>
-                    <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="transaction.php">transaction</a></li>
+                    <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="transaction.php">transaction carte</a></li>
+                    <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="transaction_user.php">transaction user</a></li>
                     <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="cards.php">les cartes</a></li>
                     <li class="hover:bg-gray-100 p-2"><a href="deconnexion.php">Déconnexion</a></li>
                   </ul>

@@ -62,15 +62,34 @@ CREATE TABLE Expenses  (
 
 
 
---creation table transaction  
-CREATE TABLE transactions  (
-    id int PRIMARY KEY AUTO_INCREMENT,
-    id_send int ,
-    id_service int,
-    montant DECIMAL not null ,
-    FOREIGN KEY (id_send) REFERENCES utilisateur(id),
-    FOREIGN KEY (id_service) REFERENCES utilisateur(id)
-     
+--creation table transaction carte 
+CREATE TABLE CREATE TABLE transactions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    carte_source_id INT NOT NULL,
+    carte_dest_id INT NOT NULL,
+    montant DECIMAL(10,2) NOT NULL,
+    date_transaction DATETIME DEFAULT CURRENT_TIMESTAMP,
+    description VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES utilisateur(id),
+    FOREIGN KEY (carte_source_id) REFERENCES carte(id),
+    FOREIGN KEY (carte_dest_id) REFERENCES carte(id)
+);
+
+--creation table transaction user
+CREATE TABLE transactions_users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_send INT NOT NULL,      
+    user_dest INT NOT NULL,       
+    carte_dest INT NOT NULL,    
+    carte_send INT NOT NULL,      
+    montant DECIMAL(10,2) NOT NULL,
+    description VARCHAR(255),
+    date_trans TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_send) REFERENCES utilisateur(id),
+    FOREIGN KEY (user_dest) REFERENCES utilisateur(id),
+    FOREIGN KEY (carte_send) REFERENCES carte(id),
+    FOREIGN KEY (carte_dest) REFERENCES carte(id)
 );
 
 --creation table otp
