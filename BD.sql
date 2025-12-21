@@ -92,13 +92,5 @@ CREATE TABLE transactions_users (
     FOREIGN KEY (carte_dest) REFERENCES carte(id)
 );
 
---creation table otp
-CREATE TABLE otp_codes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    code VARCHAR(6) NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES utilisateur(id)
-);
 
 
