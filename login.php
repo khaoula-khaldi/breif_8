@@ -13,8 +13,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $stmt = $pdo->prepare("SELECT * FROM utilisateur WHERE email=?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['username'] = $user['nomcomplet'];
     
     if($user && password_verify($password, $user['password'])){
+
         // Générer OTP
         $otp = str_pad(rand(0,999999),6,'0',STR_PAD_LEFT);
         $_SESSION['otp'] = $otp;

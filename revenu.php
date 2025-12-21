@@ -20,7 +20,7 @@ if(!isset($_SESSION['user_id'])){
 
           <nav class="w-full shadow-md p-4 mb-6 bg-purple-200">
         <h1 class="text-center text-2xl font-bold text-gray-800">Gestion Financière</h1>
-        <div class="text-gray-600  lg:block">Salut <?php echo  $_SESSION['username'];?></div>      </nav>
+        <div class="text-gray-600  lg:block">Salut <?php echo  $_SESSION['username']?? 'Utilisateur';?></div>      </nav>
         <div class="w-[100%] bg-green-100 border border-gray-200 rounded-xl p-4 shadow-sm flex flex-row justify-between ">
           <h2 class="text-lg font-bold text-gray-700 ">Menu</h2>
           <ul class=" flex flex-row  gap-10">
@@ -37,6 +37,8 @@ if(!isset($_SESSION['user_id'])){
                     <li class="hover:bg-gray-100 p-2"><a href="ajouter_carte.php">ajouter un carte</a></li>
                     <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="transaction.php">transaction carte</a></li>
                     <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="transaction_user.php">transaction user</a></li>
+                    <li class="hover:bg-gray-100 p-2"><a href="histoir_carte.php"> Histoir des transaction entre les carte </a></li>
+                    <li class="hover:bg-gray-100 p-2"><a href="histoir_user.php"> Histoir des transaction entre les utilsateurs </a></li>
                     <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="cards.php">les cartes</a></li>
                     <li class="hover:bg-gray-100 p-2"><a href="deconnexion.php">Déconnexion</a></li>
                   </ul>

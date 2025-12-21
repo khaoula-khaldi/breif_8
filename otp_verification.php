@@ -57,6 +57,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $user_id = $_SESSION['otp_user_id'];
         unset($_SESSION['otp'], $_SESSION['otp_user_id'], $_SESSION['otp_expiry']);
         $_SESSION['user_id']=$user_id;
+        $_SESSION['username']=$user['nomcomplet'];
 
         $stmt = $pdo->prepare("SELECT COUNT(*) AS nb_cartes FROM carte WHERE user_id = ?");
         $stmt->execute([$user_id]);
