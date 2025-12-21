@@ -22,7 +22,7 @@ include 'connexion.php';
 
       <nav class="w-full shadow-md p-4 mb-6 bg-purple-200">
         <h1 class="text-center text-2xl font-bold text-gray-800">Gestion Financièreeee</h1>
-        <div class="text-gray-600  lg:block"> <?php echo "salue ". $_SESSION['username'];?></div>
+        <div class="text-gray-600  lg:block">Salut <?php echo  $_SESSION['username'];?></div>
       </nav>
         <div class="w-[100%] bg-green-100 border border-gray-200 rounded-xl p-4 shadow-sm flex flex-row justify-between ">
           <h2 class="text-lg font-bold text-gray-700 ">Menu</h2>
@@ -35,9 +35,7 @@ include 'connexion.php';
                     class="hover:bg-pink-100 transition p-2 rounded cursor-pointer">
                     Paramètres 
                   </button>
-                  <ul id="submenu" class="hidden absolute top-full left-0 mt-2
-           bg-white border rounded shadow-md w-48
-           z-50">
+                  <ul id="submenu" class="hidden absolute top-full left-0 mt-2 bg-white border rounded shadow-md w-48 z-50">
                     <li class="hover:bg-gray-100 p-2"><a href="profil.php">Profil</a></li>
                     <li class="hover:bg-gray-100 p-2"><a href="ajouter_carte.php">ajouter un carte</a></li>
                     <li class="hover:bg-pink-100 transition p-2 rounded cursor-pointer"><a href="transaction.php">transaction carte</a></li>

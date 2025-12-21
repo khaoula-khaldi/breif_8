@@ -1,4 +1,3 @@
-
 function toggleParams() {
       const menu = document.getElementById("submenu");
       menu.classList.toggle("hidden");

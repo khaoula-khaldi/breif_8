@@ -23,7 +23,7 @@ if(!isset($_SESSION['user_id'])){
 
 
 <form action="transaction.php" method="POST" class="space-y-4">
-    <a href="tableborde.php">retour</a>
+    
     <div>
         <label class="block mb-1 font-medium text-gray-700">Carte source :</label>
         <select name="id_send" required class="w-full border border-gray-300 p-2 rounded">
@@ -72,6 +72,10 @@ if(!isset($_SESSION['user_id'])){
     </div>
 
     <button type="submit" name="transaction" class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Envoyer</button>
+
+    <a href="tableborde.php" class="block text-center text-sm text-gray-600 mt-3">
+        ← Retour au tableau de bord
+    </a>
 </form>
 </div>
 

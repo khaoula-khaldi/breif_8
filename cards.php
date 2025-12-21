@@ -17,7 +17,9 @@ if (!isset($_SESSION['user_id'])) {
     <title>Document</title>
 </head>
 <body class="flex flex-wrap gap-10 bg-purple-100">
-    <p class="text-xl centre font-semibold tracking-widest w-[350px] h-[200px] rounded-2xl bg-purple-100 p-6 shadow-2xl"><a href="tableborde.php">Retour a table de borde </a></p>
+            <a href="tableborde.php" class="block text-center text-sm text-gray-600 mt-3">
+            ← Retour au tableau de bord
+        </a>
     <?php
     $stmt = $pdo->prepare("SELECT  carte.id, carte.nom, category.nom AS category_name FROM carte JOIN category ON carte.category_id = category.id WHERE carte.user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
